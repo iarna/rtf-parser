@@ -1,0 +1,39 @@
+{
+  "name": "rtf-parser",
+  "version": "1.0.0",
+  "description": "This is a general RTF parser.  It takes a text stream and produces a document object representing the parsed document.  In and of itself, this isn't super useful but it's the building block for other tools to convert RTF into other formats.",
+  "main": "index.js",
+  "dependencies": {
+    "iconv-lite": "^0.4.15"
+  },
+  "devDependencies": {
+    "standard": "^8.6.0",
+    "tap": "^9.0.3"
+  },
+  "scripts": {
+    "test": "standard && tap test/"
+  },
+  "keywords": ["rtf"],
+  "author": "Rebecca Turner <me@re-becca.org> (http://re-becca.org/)",
+  "license": "ISC",
+  "files": [
+    "index.js",
+    "rtf-interpreter.js",
+    "rtf-parser.js",
+    "rtf-group.js",
+    "rtf-document.js",
+    "rtf-paragraph.js",
+    "rtf-span.js"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iarna/rtf-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iarna/rtf-parser/issues"
+  },
+  "homepage": "https://npmjs.com/package/rtf-parser"
+}

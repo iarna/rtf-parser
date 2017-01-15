@@ -105,7 +105,7 @@ class RTFInterpreter extends Writable {
     this.group.style.align = 'center'
   }
   ctrl$qj () {
-    this.group.style.align = 'justified'
+    this.group.style.align = 'justify'
   }
   ctrl$ql () {
     this.group.style.align = 'left'

@@ -46,10 +46,23 @@ class RTFDocument extends RTFGroup {
       }
       super.addContent(node)
       if (node.content.length) {
-        node.style = Object.assign({}, node.content[0].style)
-        node.style.font = this.getFont(node.style.font)
-        node.style.foreground = this.getColor(node.style.foreground)
-        node.style.background = this.getColor(node.style.background)
+        const initialStyle = node.content[0].style
+        const style = {}
+        style.font = this.getFont(initialStyle.font)
+        style.foreground = this.getColor(initialStyle.foreground)
+        style.background = this.getColor(initialStyle.background)
+        for (let prop of Object.keys(initialStyle)) {
+          if (initialStyle[prop] == null) continue
+          let match = true
+          for (let span of node.content) {
+            if (initialStyle[prop] !== span.style[prop]) {
+              match = false
+              break
+            }
+          }
+          if (match) style[prop] = initialStyle[prop]
+        }
+        node.style = style
       }
     } else {
       super.addContent(node)

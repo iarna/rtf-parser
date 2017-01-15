@@ -40,6 +40,17 @@ class RTFInterpreter extends Writable {
     this.group = null
     this.once('finish', () => {
       this.doc.addContent(new RTFParagraph())
+      const initialStyle = this.doc.content[0].style
+      for (let prop of Object.keys(this.doc.style)) {
+        let match = true
+        for (let para of this.doc.content) {
+          if (initialStyle[prop] !== para.style[prop]) {
+            match = false
+            break
+          }
+        }
+        if (match) this.doc.style[prop] = initialStyle[prop]
+      }
     })
   }
   _write (cmd, encoding, done) {

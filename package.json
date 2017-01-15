@@ -4,7 +4,8 @@
   "description": "This is a general RTF parser.  It takes a text stream and produces a document object representing the parsed document.  In and of itself, this isn't super useful but it's the building block for other tools to convert RTF into other formats.",
   "main": "index.js",
   "dependencies": {
-    "iconv-lite": "^0.4.15"
+    "iconv-lite": "^0.4.15",
+    "readable-stream": "^2.2.2"
   },
   "devDependencies": {
     "standard": "^8.6.0",
@@ -13,7 +14,9 @@
   "scripts": {
     "test": "standard && tap test/"
   },
-  "keywords": ["rtf"],
+  "keywords": [
+    "rtf"
+  ],
   "author": "Rebecca Turner <me@re-becca.org> (http://re-becca.org/)",
   "license": "ISC",
   "files": [

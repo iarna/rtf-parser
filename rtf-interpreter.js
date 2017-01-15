@@ -258,13 +258,13 @@ class RTFInterpreter extends Writable {
     this.group.green = value
   }
   ctrl$cf (value) {
-    this.group.foreground = value
+    this.group.style.foreground = value
   }
   ctrl$cb (value) {
-    this.group.background = value
+    this.group.style.background = value
   }
   ctrl$fs (value) {
-    this.group.fontSize = value
+    this.group.style.fontSize = value
   }
 
 // margins

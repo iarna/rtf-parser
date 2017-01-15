@@ -212,7 +212,7 @@ class RTFInterpreter extends Writable {
     if (this.group instanceof FontTable) {
       this.group.currentFont = this.group.table[num] = new Font()
     } else {
-      this.group.font = num
+      this.group.style.font = num
     }
   }
   ctrl$fnil () {

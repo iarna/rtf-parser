@@ -69,7 +69,8 @@ required bits from the spec that are currently ignored.
 This is the class you get back from the parse functions.  It has some
 document global options and the paragraph objects that make up the document.
 
-* marginLeft, marginRight, marginBottom, marginTop — the margins for this document.
+* marginLeft, marginRight, marginBottom, marginTop — the margins for this document. These are in
+  twips, which are one twentieth of a point.
 * content — An array of RTFParagraph objects
 
 ### RTFParagraph

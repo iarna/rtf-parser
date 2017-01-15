@@ -148,7 +148,7 @@ class RTFInterpreter extends Writable {
     this.group.style.valign = 'normal'
   }
   ctrl$strike (set) {
-    this.group.style.strike = set !== 0
+    this.group.style.strikethrough = set !== 0
   }
   ctrl$ul (set) {
     this.group.style.underline = set !== 0

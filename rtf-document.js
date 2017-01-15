@@ -45,6 +45,12 @@ class RTFDocument extends RTFGroup {
         node.content.unshift(this.content.pop())
       }
       super.addContent(node)
+      if (node.content.length) {
+        node.style = Object.assign({}, node.content[0].style)
+        node.style.font = this.getFont(node.style.font)
+        node.style.foreground = this.getColor(node.style.foreground)
+        node.style.background = this.getColor(node.style.background)
+      }
     } else {
       super.addContent(node)
     }

@@ -1,6 +1,6 @@
 {
   "name": "rtf-parser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This is a general RTF parser.  It takes a text stream and produces a document object representing the parsed document.  In and of itself, this isn't super useful but it's the building block for other tools to convert RTF into other formats.",
   "main": "index.js",
   "dependencies": {

@@ -300,7 +300,9 @@ class FontTable extends RTFGroup {
     this.currentFont = null
   }
   addContent (text) {
-    this.currentFont.name = text.value.replace(/;\s*$/, '')
+    if (this.currentFont) {
+      this.currentFont.name = text.value.replace(/;\s*$/, '')
+    }
   }
 }
 

@@ -26,8 +26,6 @@ class RTFGroup {
     this.style = {}
   }
   addContent (node) {
-    const defaultFont = this.getFont(0) || {family: 'roman', charset: 'ASCII', name: 'Serif'}
-    const defaultColor = this.getColor(0) || {red: 0, blue: 0, green: 0}
     node.style = Object.assign({}, this.getStyle())
     node.style.font = this.getFont(node.style.font)
     node.style.foreground = this.getColor(node.style.foreground)

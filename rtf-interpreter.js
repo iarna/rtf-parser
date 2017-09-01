@@ -297,7 +297,7 @@ class FontTable extends RTFGroup {
   constructor (parent) {
     super(parent)
     this.table = []
-    this.currentFont = null
+    this.currentFont = {family: 'roman', charset: 'ASCII', name: 'Serif'}
   }
   addContent (text) {
     this.currentFont.name = text.value.replace(/;\s*$/, '')

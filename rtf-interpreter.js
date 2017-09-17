@@ -38,20 +38,7 @@ class RTFInterpreter extends Writable {
     this.parserState = this.parseTop
     this.groupStack = []
     this.group = null
-    this.once('finish', () => {
-      this.doc.addContent(new RTFParagraph())
-      const initialStyle = this.doc.content[0].style
-      for (let prop of Object.keys(this.doc.style)) {
-        let match = true
-        for (let para of this.doc.content) {
-          if (initialStyle[prop] !== para.style[prop]) {
-            match = false
-            break
-          }
-        }
-        if (match) this.doc.style[prop] = initialStyle[prop]
-      }
-    })
+    this.once('prefinish', () => this.finisher())
   }
   _write (cmd, encoding, done) {
     const method = 'cmd$' + cmd.type.replace(/-(.)/g, (_, char) => char.toUpperCase())
@@ -61,6 +48,20 @@ class RTFInterpreter extends Writable {
       process.emit('error', `Unknown RTF command ${cmd.type}, tried ${method}`)
     }
     done()
+  }
+  finisher () {
+    this.doc.addContent(new RTFParagraph())
+    const initialStyle = this.doc.content[0].style
+    for (let prop of Object.keys(this.doc.style)) {
+      let match = true
+      for (let para of this.doc.content) {
+        if (initialStyle[prop] !== para.style[prop]) {
+          match = false
+          break
+        }
+      }
+      if (match) this.doc.style[prop] = initialStyle[prop]
+    }
   }
 
   cmd$groupStart () {

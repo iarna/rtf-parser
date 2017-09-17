@@ -50,7 +50,7 @@ class RTFInterpreter extends Writable {
     done()
   }
   finisher () {
-    this.doc.addContent(new RTFParagraph())
+    while (this.groupStack.length) this.cmd$groupEnd ()
     const initialStyle = this.doc.content[0].style
     for (let prop of Object.keys(this.doc.style)) {
       let match = true

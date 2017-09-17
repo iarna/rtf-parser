@@ -86,7 +86,7 @@ class RTFInterpreter extends Writable {
       for (const item of endingGroup.content) {
         doc.addContent(item)
       }
-      process.emit('debug', 'GROUP END', endingGroup.type)
+      process.emit('debug', 'GROUP END', endingGroup.type, endingGroup.get('ignorable'))
     }
   }
   cmd$text (cmd) {

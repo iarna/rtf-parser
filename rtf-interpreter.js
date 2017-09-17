@@ -126,6 +126,14 @@ class RTFInterpreter extends Writable {
     this.group.style.align = 'right'
   }
 
+  // text direction
+  ctrl$rtlch () {
+    this.group.style.dir = 'rtl'
+  }
+  ctrl$ltrch () {
+    this.group.style.dir = 'ltr'
+  }
+
   // general style
   ctrl$par () {
     this.group.addContent(new RTFParagraph())

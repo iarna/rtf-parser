@@ -125,7 +125,7 @@ class RTFParser extends Transform {
   }
   emitText () {
     if (this.text === '') return
-    this.push({type: 'text', value: this.text})
+    this.push({type: 'text', value: this.text, pos: this.char, row: this.row, col: this.col})
     this.text = ''
   }
   emitControlWord () {
@@ -136,7 +136,10 @@ class RTFParser extends Transform {
       this.push({
         type: 'control-word',
         value: this.controlWord,
-        param: this.controlWordParam !== '' && Number(this.controlWordParam)
+        param: this.controlWordParam !== '' && Number(this.controlWordParam),
+        pos: this.char,
+        row: this.row,
+        col: this.col
       })
     }
     this.controlWord = ''
@@ -144,19 +147,19 @@ class RTFParser extends Transform {
   }
   emitStartGroup () {
     this.emitText()
-    this.push({type: 'group-start'})
+    this.push({type: 'group-start', pos: this.char, row: this.row, col: this.col})
   }
   emitEndGroup () {
     this.emitText()
-    this.push({type: 'group-end'})
+    this.push({type: 'group-end', pos: this.char, row: this.row, col: this.col})
   }
   emitIgnorable () {
     this.emitText()
-    this.push({type: 'ignorable'})
+    this.push({type: 'ignorable', pos: this.char, row: this.row, col: this.col})
   }
   emitHexChar () {
     this.emitText()
-    this.push({type: 'hexchar', value: this.hexChar})
+    this.push({type: 'hexchar', value: this.hexChar, pos: this.char, row: this.row, col: this.col})
     this.hexChar = ''
   }
   emitError (message) {
@@ -165,7 +168,7 @@ class RTFParser extends Transform {
   }
   emitEndParagraph () {
     this.emitText()
-    this.push({type: 'end-paragraph'})
+    this.push({type: 'end-paragraph', pos: this.char, row: this.row, col: this.col})
   }
 }
 

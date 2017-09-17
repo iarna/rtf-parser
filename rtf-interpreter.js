@@ -225,30 +225,47 @@ class RTFInterpreter extends Writable {
     }
   }
   ctrl$fnil () {
-    this.group.currentFont.family = 'nil'
+    if (this.group instanceof FontTable) {
+      this.group.currentFont.family = 'nil'
+    }
   }
   ctrl$froman () {
-    this.group.currentFont.family = 'roman'
+    if (this.group instanceof FontTable) {
+      this.group.currentFont.family = 'roman'
+    }
   }
   ctrl$fswiss () {
-    this.group.currentFont.family = 'swiss'
+    if (this.group instanceof FontTable) {
+      this.group.currentFont.family = 'swiss'
+    }
   }
   ctrl$fmodern () {
-    this.group.currentFont.family = 'modern'
+    if (this.group instanceof FontTable) {
+      this.group.currentFont.family = 'modern'
+    }
   }
   ctrl$fscript () {
-    this.group.currentFont.family = 'script'
+    if (this.group instanceof FontTable) {
+      this.group.currentFont.family = 'script'
+    }
   }
   ctrl$fdecor () {
-    this.group.currentFont.family = 'decor'
+    if (this.group instanceof FontTable) {
+      this.group.currentFont.family = 'decor'
+    }
   }
   ctrl$ftech () {
-    this.group.currentFont.family = 'tech'
+    if (this.group instanceof FontTable) {
+      this.group.currentFont.family = 'tech'
+    }
   }
   ctrl$fbidi () {
-    this.group.currentFont.family = 'bidi'
+    if (this.group instanceof FontTable) {
+      this.group.currentFont.family = 'bidi'
+    }
   }
   ctrl$fcharset (code) {
+    if (this.group instanceof FontTable) {
     let charset = null
     if (code === 1) {
       charset = this.group.get('charset')
@@ -258,10 +275,13 @@ class RTFInterpreter extends Writable {
     if (charset == null) {
       return this.emit('error', new Error('Unsupported charset code #' + code))
     }
-    this.group.currentFont.charset = charset
+      this.group.currentFont.charset = charset
+    }
   }
   ctrl$fprq (pitch) {
-    this.group.currentFont.pitch = pitch
+    if (this.group instanceof FontTable) {
+      this.group.currentFont.pitch = pitch
+    }
   }
 
   // colors
@@ -269,13 +289,19 @@ class RTFInterpreter extends Writable {
     this.group = new ColorTable(this.group.parent)
   }
   ctrl$red (value) {
-    this.group.red = value
+    if (this.group instanceof ColorTable) {
+      this.group.red = value
+    }
   }
   ctrl$blue (value) {
-    this.group.blue = value
+    if (this.group instanceof ColorTable) {
+      this.group.blue = value
+    }
   }
   ctrl$green (value) {
-    this.group.green = value
+    if (this.group instanceof ColorTable) {
+      this.group.green = value
+    }
   }
   ctrl$cf (value) {
     this.group.style.foreground = value

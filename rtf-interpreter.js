@@ -326,6 +326,17 @@ class RTFInterpreter extends Writable {
   ctrl$margb (value) {
     this.doc.marginBottom = value
   }
+
+// unsupported (and we need to ignore content)
+  ctrl$stylesheet (value) {
+    this.group.ignorable = true
+  }
+  ctrl$info (value) {
+    this.group.ignorable = true
+  }
+  ctrl$mmathPr (value) {
+    this.group.ignorable = true
+  }
 }
 
 class FontTable extends RTFGroup {

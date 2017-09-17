@@ -55,6 +55,7 @@ The document returned is of the `RTFDocument` class, see below for details.
     CP1258, CP862, CP1256, CP1257, CP1251, CP874, CP238, CP437
 * Colors (foreground and background) 
 * Margins
+* Text direction
 
 ## NOTABLY MISSING
 
@@ -95,3 +96,4 @@ document global options and the paragraph objects that make up the document.
   * strikethrough: boolean
   * foreground: color (an object with red, green and blue values, 0-255)
   * background: color
+  * dir (rtl or ltr)

@@ -169,7 +169,9 @@ class RTFInterpreter extends Writable {
   }
   ctrl$u (num) {
     var charBuf = Buffer.alloc ? Buffer.alloc(2) : new Buffer(2)
-    charBuf.writeUInt16LE(num, 0)
+    // RTF, for reasons, represents unicode characters as signed integers
+    // thus managing to match literally no one.
+    charBuf.writeInt16LE(num, 0)
     this.group.addContent(new RTFSpan({value: iconv.decode(charBuf, 'ucs2')}))
   }
   ctrl$super () {

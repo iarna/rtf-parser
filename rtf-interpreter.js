@@ -220,67 +220,69 @@ class RTFInterpreter extends Writable {
   ctrl$f (num) {
     if (this.group instanceof FontTable) {
       this.group.currentFont = this.group.table[num] = new Font()
+    } else if (this.group.parent instanceof FontTable) {
+      this.group.parent.currentFont = this.group.parent.table[num] = new Font()
     } else {
       this.group.style.font = num
     }
   }
   ctrl$fnil () {
-    if (this.group instanceof FontTable) {
-      this.group.currentFont.family = 'nil'
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      this.group.get('currentFont').family = 'nil'
     }
   }
   ctrl$froman () {
-    if (this.group instanceof FontTable) {
-      this.group.currentFont.family = 'roman'
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      this.group.get('currentFont').family = 'roman'
     }
   }
   ctrl$fswiss () {
-    if (this.group instanceof FontTable) {
-      this.group.currentFont.family = 'swiss'
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      this.group.get('currentFont').family = 'swiss'
     }
   }
   ctrl$fmodern () {
-    if (this.group instanceof FontTable) {
-      this.group.currentFont.family = 'modern'
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      this.group.get('currentFont').family = 'modern'
     }
   }
   ctrl$fscript () {
-    if (this.group instanceof FontTable) {
-      this.group.currentFont.family = 'script'
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      this.group.get('currentFont').family = 'script'
     }
   }
   ctrl$fdecor () {
-    if (this.group instanceof FontTable) {
-      this.group.currentFont.family = 'decor'
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      this.group.get('currentFont').family = 'decor'
     }
   }
   ctrl$ftech () {
-    if (this.group instanceof FontTable) {
-      this.group.currentFont.family = 'tech'
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      this.group.get('currentFont').family = 'tech'
     }
   }
   ctrl$fbidi () {
-    if (this.group instanceof FontTable) {
-      this.group.currentFont.family = 'bidi'
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      this.group.get('currentFont').family = 'bidi'
     }
   }
   ctrl$fcharset (code) {
-    if (this.group instanceof FontTable) {
-    let charset = null
-    if (code === 1) {
-      charset = this.group.get('charset')
-    } else {
-      charset = codeToCP[code]
-    }
-    if (charset == null) {
-      return this.emit('error', new Error('Unsupported charset code #' + code))
-    }
-      this.group.currentFont.charset = charset
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      let charset = null
+      if (code === 1) {
+        charset = this.group.get('charset')
+      } else {
+        charset = codeToCP[code]
+      }
+      if (charset == null) {
+        return this.emit('error', new Error('Unsupported charset code #' + code))
+      }
+      this.group.get('currentFont').charset = charset
     }
   }
   ctrl$fprq (pitch) {
-    if (this.group instanceof FontTable) {
-      this.group.currentFont.pitch = pitch
+    if (this.group instanceof FontTable || this.group.parent instanceof FontTable) {
+      this.group.get('currentFont').pitch = pitch
     }
   }
 

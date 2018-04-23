@@ -71,7 +71,7 @@ class RTFInterpreter extends Writable {
         value: iconv.decode(
           Buffer.from(hexstr, 'hex'), this.group.get('charset'))
       }))
-      this.hexStore.slice(0);
+      this.hexStore.splice(0);
       console.log(hexstr);
     }
   }

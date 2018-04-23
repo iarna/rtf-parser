@@ -72,7 +72,6 @@ class RTFInterpreter extends Writable {
           Buffer.from(hexstr, 'hex'), this.group.get('charset'))
       }))
       this.hexStore.splice(0);
-      console.log(hexstr);
     }
   }
 

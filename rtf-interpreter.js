@@ -39,7 +39,7 @@ class RTFInterpreter extends Writable {
     this.groupStack = []
     this.group = null
     this.once('prefinish', () => this.finisher())
-    this.hexStore = [];
+    this.hexStore = []
   }
   _write (cmd, encoding, done) {
     const method = 'cmd$' + cmd.type.replace(/-(.)/g, (_, char) => char.toUpperCase())
@@ -51,7 +51,7 @@ class RTFInterpreter extends Writable {
     done()
   }
   finisher () {
-    while (this.groupStack.length) this.cmd$groupEnd ()
+    while (this.groupStack.length) this.cmd$groupEnd()
     const initialStyle = this.doc.content[0].style
     for (let prop of Object.keys(this.doc.style)) {
       let match = true
@@ -64,32 +64,32 @@ class RTFInterpreter extends Writable {
       if (match) this.doc.style[prop] = initialStyle[prop]
     }
   }
-  flushHexStore() {
-    if (this.hexStore.length>0) {
-      let hexstr = this.hexStore.map(cmd => cmd.value).join('');
+  flushHexStore () {
+    if (this.hexStore.length > 0) {
+      let hexstr = this.hexStore.map(cmd => cmd.value).join('')
       this.group.addContent(new RTFSpan({
         value: iconv.decode(
           Buffer.from(hexstr, 'hex'), this.group.get('charset'))
       }))
-      this.hexStore.splice(0);
+      this.hexStore.splice(0)
     }
   }
 
   cmd$groupStart () {
-    this.flushHexStore();
+    this.flushHexStore()
     if (this.group) this.groupStack.push(this.group)
     this.group = new RTFGroup(this.group || this.doc)
   }
   cmd$ignorable () {
-    this.flushHexStore();
+    this.flushHexStore()
     this.group.ignorable = true
   }
   cmd$endParagraph () {
-    this.flushHexStore();
+    this.flushHexStore()
     this.group.addContent(new RTFParagraph())
   }
   cmd$groupEnd () {
-    this.flushHexStore();
+    this.flushHexStore()
     const endingGroup = this.group
     this.group = this.groupStack.pop()
     const doc = this.group || this.doc
@@ -105,11 +105,11 @@ class RTFInterpreter extends Writable {
     }
   }
   cmd$text (cmd) {
-    this.flushHexStore();
+    this.flushHexStore()
     this.group.addContent(new RTFSpan(cmd))
   }
   cmd$controlWord (cmd) {
-    this.flushHexStore();
+    this.flushHexStore()
     if (!this.group.type) this.group.type = cmd.value
     const method = 'ctrl$' + cmd.value.replace(/-(.)/g, (_, char) => char.toUpperCase())
     if (this[method]) {
@@ -119,7 +119,7 @@ class RTFInterpreter extends Writable {
     }
   }
   cmd$hexchar (cmd) {
-    this.hexStore.push(cmd);
+    this.hexStore.push(cmd)
   }
 
   ctrl$rtf () {

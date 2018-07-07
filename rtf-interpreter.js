@@ -168,6 +168,9 @@ class RTFInterpreter extends Writable {
     this.group.style.italic = set !== 0
   }
   ctrl$u (num) {
+    if (num < 0) {
+      num = 65536 + num;
+    }
     var charBuf = Buffer.alloc ? Buffer.alloc(2) : new Buffer(2)
     charBuf.writeUInt16LE(num, 0)
     this.group.addContent(new RTFSpan({value: iconv.decode(charBuf, 'ucs2')}))

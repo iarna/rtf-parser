@@ -10,7 +10,7 @@ const iconv = require('iconv-lite')
 
 const availableCP = [
   437, 737, 775, 850, 852, 853, 855, 857, 858, 860, 861, 863, 865, 866,
-  869, 1125, 1250, 1251, 1252, 1253, 1254, 1257 ]
+  869, 932, 1125, 1250, 1251, 1252, 1253, 1254, 1257 ]
 const codeToCP = {
   0: 'ASCII',
   77: 'MacRoman',
@@ -39,6 +39,7 @@ class RTFInterpreter extends Writable {
     this.groupStack = []
     this.group = null
     this.once('prefinish', () => this.finisher())
+    this.hexStore = [];
   }
   _write (cmd, encoding, done) {
     const method = 'cmd$' + cmd.type.replace(/-(.)/g, (_, char) => char.toUpperCase())
@@ -63,18 +64,32 @@ class RTFInterpreter extends Writable {
       if (match) this.doc.style[prop] = initialStyle[prop]
     }
   }
+  flushHexStore() {
+    if (this.hexStore.length>0) {
+      let hexstr = this.hexStore.map(cmd => cmd.value).join('');
+      this.group.addContent(new RTFSpan({
+        value: iconv.decode(
+          Buffer.from(hexstr, 'hex'), this.group.get('charset'))
+      }))
+      this.hexStore.splice(0);
+    }
+  }
 
   cmd$groupStart () {
+    this.flushHexStore();
     if (this.group) this.groupStack.push(this.group)
     this.group = new RTFGroup(this.group || this.doc)
   }
   cmd$ignorable () {
+    this.flushHexStore();
     this.group.ignorable = true
   }
   cmd$endParagraph () {
+    this.flushHexStore();
     this.group.addContent(new RTFParagraph())
   }
   cmd$groupEnd () {
+    this.flushHexStore();
     const endingGroup = this.group
     this.group = this.groupStack.pop()
     const doc = this.group || this.doc
@@ -90,9 +105,11 @@ class RTFInterpreter extends Writable {
     }
   }
   cmd$text (cmd) {
+    this.flushHexStore();
     this.group.addContent(new RTFSpan(cmd))
   }
   cmd$controlWord (cmd) {
+    this.flushHexStore();
     if (!this.group.type) this.group.type = cmd.value
     const method = 'ctrl$' + cmd.value.replace(/-(.)/g, (_, char) => char.toUpperCase())
     if (this[method]) {
@@ -102,10 +119,7 @@ class RTFInterpreter extends Writable {
     }
   }
   cmd$hexchar (cmd) {
-    this.group.addContent(new RTFSpan({
-      value: iconv.decode(
-        Buffer.from(cmd.value, 'hex'), this.group.get('charset'))
-    }))
+    this.hexStore.push(cmd);
   }
 
   ctrl$rtf () {
@@ -348,7 +362,7 @@ class FontTable extends RTFGroup {
     this.currentFont = {family: 'roman', charset: 'ASCII', name: 'Serif'}
   }
   addContent (text) {
-    this.currentFont.name = text.value.replace(/;\s*$/, '')
+    this.currentFont.name += text.value.replace(/;\s*$/, '')
   }
 }
 
@@ -356,7 +370,7 @@ class Font {
   constructor () {
     this.family = null
     this.charset = null
-    this.name = null
+    this.name = ''
     this.pitch = 0
   }
 }

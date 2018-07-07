@@ -39,7 +39,7 @@ The document returned is of the `RTFDocument` class, see below for details.
 
 * The following document code pages:<br>
   437, 737, 775, 850, 852, 853, 855, 857, 858, 860, 861, 863, 865, 866, 869,
-  1125, 1250, 1251, 1252, 1253, 1254, 1257
+  932, 1125, 1250, 1251, 1252, 1253, 1254, 1257
 * Unicode characters.
 * Non-unicode representations of: non-breaking spaces, soft hyphens and non-breaking hyphens.
 * Paragraph alignment: center, justified, left and right

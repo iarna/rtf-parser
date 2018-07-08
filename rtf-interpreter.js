@@ -52,7 +52,7 @@ class RTFInterpreter extends Writable {
   }
   finisher () {
     while (this.groupStack.length) this.cmd$groupEnd()
-    const initialStyle = this.doc.content[0].style
+    const initialStyle = this.doc.content.length ? this.doc.content[0].style : []
     for (let prop of Object.keys(this.doc.style)) {
       let match = true
       for (let para of this.doc.content) {
@@ -106,6 +106,9 @@ class RTFInterpreter extends Writable {
   }
   cmd$text (cmd) {
     this.flushHexStore()
+    if (!this.group) { // an RTF fragment, missing the {\rtf1 header
+      this.group = this.doc
+    }
     this.group.addContent(new RTFSpan(cmd))
   }
   cmd$controlWord (cmd) {

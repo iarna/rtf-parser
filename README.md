@@ -33,6 +33,9 @@ RTF, like HTML, allows (mostly) seamless degrading when you don't understand
 an element.  As such, while this parser is still quite incomplete it is
 already useful
 
+RTF fragments are supported.  `\b hi there\b0` will generate a document with
+`hi there` flagged as bold text.
+
 The document returned is of the `RTFDocument` class, see below for details.
 
 ## RTF FEATURES SUPPORTED

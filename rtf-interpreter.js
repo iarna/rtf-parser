@@ -129,6 +129,11 @@ class RTFInterpreter extends Writable {
     this.group = this.doc
   }
 
+  // new line
+  ctrl$line () {
+    this.group.addContent(new RTFSpan({ value: '\n' }))
+  }
+
   // alignment
   ctrl$qc () {
     this.group.style.align = 'center'

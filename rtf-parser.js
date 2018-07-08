@@ -28,7 +28,7 @@ class RTFParser extends Transform {
     done()
   }
   _flush (done) {
-    this.emitText()
+    if (this.text !== '\u0000') this.emitText()
     done()
   }
   parseText (char) {

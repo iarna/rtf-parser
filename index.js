@@ -29,7 +29,9 @@ function parse (cb) {
   parser.once('error', errorHandler)
   const interpreter = new RTFInterpreter(document)
   interpreter.on('error', errorHandler)
-  interpreter.on('finish', () => cb(null, document))
+  interpreter.on('finish', () => {
+    if (!errored) cb(null, document)
+  })
   parser.pipe(interpreter)
   return parser
 }

@@ -124,6 +124,9 @@ class RTFInterpreter extends Writable {
   cmd$hexchar (cmd) {
     this.hexStore.push(cmd)
   }
+  cmd$error (cmd) {
+    this.emit('error', new Error('Error: ' + cmd.value + (cmd.row && cmd.col ? ' at line ' + cmd.row + ':' + cmd.col : '') + '.'))
+  }
 
   ctrl$rtf () {
     this.group = this.doc

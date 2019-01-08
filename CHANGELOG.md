@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/iarna/rtf-parser/compare/v1.3.0...v1.3.1) (2019-01-08)
+
+
+### Bug Fixes
+
+* **interpreter:** avoid finish callback after err ([#14](https://github.com/iarna/rtf-parser/issues/14)) ([2882b17](https://github.com/iarna/rtf-parser/commit/2882b17)), closes [#13](https://github.com/iarna/rtf-parser/issues/13)
+* **interpreter:** Unknown RTF command error ([#16](https://github.com/iarna/rtf-parser/issues/16)) ([63314fe](https://github.com/iarna/rtf-parser/commit/63314fe)), closes [#13](https://github.com/iarna/rtf-parser/issues/13)
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/iarna/rtf-parser/compare/v1.2.0...v1.3.0) (2018-07-08)
 

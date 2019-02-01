@@ -137,6 +137,11 @@ class RTFInterpreter extends Writable {
     this.group.addContent(new RTFSpan({ value: '\n' }))
   }
 
+  // tab
+  ctrl$tab () {
+    this.group.addContent(new RTFSpan({ value: '\t' }))
+  }
+
   // alignment
   ctrl$qc () {
     this.group.style.align = 'center'

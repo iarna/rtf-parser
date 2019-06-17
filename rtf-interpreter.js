@@ -13,6 +13,7 @@ const availableCP = [
   869, 932, 1125, 1250, 1251, 1252, 1253, 1254, 1257 ]
 const codeToCP = {
   0: 'ASCII',
+  2: 'SYMBOL',
   77: 'MacRoman',
   128: 'SHIFT_JIS',
   129: 'CP949', // Hangul

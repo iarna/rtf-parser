@@ -251,6 +251,10 @@ class RTFInterpreter extends Writable {
       this.group.parent.currentFont = this.group.parent.table[num] = new Font()
     } else {
       this.group.style.font = num
+
+      let fontCharset = this.group.getFont(num).charset
+      fontCharset = fontCharset && fontCharset !== 'ASCII' ? fontCharset : this.group.charset// default font charset
+      this.group.charset = fontCharset
     }
   }
   ctrl$fnil () {

@@ -7,7 +7,7 @@ formats.
 
 
 ```js
-const parseRTF = require('@iarna/rtf-parser')
+const parseRTF = require('rtf-parser')
 const fs = require('fs')
 
 parseRTF.string('{\\rtf1\\ansi\\b hi there\\b0}', (err, doc) => {

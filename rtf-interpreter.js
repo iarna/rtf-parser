@@ -185,11 +185,16 @@ class RTFInterpreter extends Writable {
     this.group.style.italic = set !== 0
   }
   ctrl$u (num) {
-    var charBuf = Buffer.alloc ? Buffer.alloc(2) : new Buffer(2)
-    // RTF, for reasons, represents unicode characters as signed integers
-    // thus managing to match literally no one.
-    charBuf.writeInt16LE(num, 0)
-    this.group.addContent(new RTFSpan({value: iconv.decode(charBuf, 'ucs2')}))
+    try {
+      var charBuf = Buffer.alloc ? Buffer.alloc(2) : new Buffer(2)
+      // RTF, for reasons, represents unicode characters as signed integers
+      // thus managing to match literally no one.
+      charBuf.writeInt16LE(num, 0)
+      this.group.addContent(new RTFSpan({value: iconv.decode(charBuf, 'ucs2')}))
+    } catch (e) {
+      // Yet UCS4 signed characters can exist too
+      this.group.addContent(new RTFSpan({value: String.fromCodePoint([num])}))
+    }
   }
   ctrl$super () {
     this.group.style.valign = 'super'

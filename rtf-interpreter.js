@@ -143,6 +143,36 @@ class RTFInterpreter extends Writable {
     this.group.addContent(new RTFSpan({ value: '\t' }))
   }
 
+  // en dash
+  ctrl$endash () {
+    this.group.addContent(new RTFSpan({ value: '\u2013' }))
+  }
+
+  // em dash
+  ctrl$emdash () {
+    this.group.addContent(new RTFSpan({ value: '\u2014' }))
+  }
+
+  // left single quote
+  ctrl$lquote () {
+    this.group.addContent(new RTFSpan({ value: '\u2018' }))
+  }
+
+  // right single quote
+  ctrl$rquote () {
+    this.group.addContent(new RTFSpan({ value: '\u2019' }))
+  }
+
+  // left double quote
+  ctrl$ldblquote () {
+    this.group.addContent(new RTFSpan({ value: '\u201c' }))
+  }
+
+  // right double quote
+  ctrl$rdblquote () {
+    this.group.addContent(new RTFSpan({ value: '\u201d' }))
+  }
+
   // alignment
   ctrl$qc () {
     this.group.style.align = 'center'

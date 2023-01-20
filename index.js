@@ -35,4 +35,3 @@ function parse (cb) {
   parser.pipe(interpreter)
   return parser
 }
-

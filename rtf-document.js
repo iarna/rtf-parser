@@ -26,19 +26,24 @@ class RTFDocument extends RTFGroup {
       valign: 'normal'
     }
   }
+
   get (name) {
     return this[name]
   }
+
   getFont (num) {
     return this.fonts[num]
   }
+
   getColor (num) {
     return this.colors[num]
   }
+
   getStyle (name) {
     if (!name) return this.style
     return this.style[name]
   }
+
   addContent (node) {
     if (node instanceof RTFParagraph) {
       while (this.content.length && !(this.content[this.content.length - 1] instanceof RTFParagraph)) {
@@ -51,10 +56,10 @@ class RTFDocument extends RTFGroup {
         style.font = this.getFont(initialStyle.font)
         style.foreground = this.getColor(initialStyle.foreground)
         style.background = this.getColor(initialStyle.background)
-        for (let prop of Object.keys(initialStyle)) {
+        for (const prop of Object.keys(initialStyle)) {
           if (initialStyle[prop] == null) continue
           let match = true
-          for (let span of node.content) {
+          for (const span of node.content) {
             if (initialStyle[prop] !== span.style[prop]) {
               match = false
               break

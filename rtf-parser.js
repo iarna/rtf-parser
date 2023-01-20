@@ -3,7 +3,7 @@ const Transform = require('readable-stream').Transform
 
 class RTFParser extends Transform {
   constructor () {
-    super({objectMode: true})
+    super({ objectMode: true })
     this.text = ''
     this.controlWord = ''
     this.controlWordParam = ''
@@ -13,6 +13,7 @@ class RTFParser extends Transform {
     this.row = 1
     this.col = 1
   }
+
   _transform (buf, encoding, done) {
     const text = buf.toString('ascii')
     for (let ii = 0; ii < text.length; ++ii) {
@@ -27,10 +28,12 @@ class RTFParser extends Transform {
     }
     done()
   }
+
   _flush (done) {
     if (this.text !== '\u0000') this.emitText()
     done()
   }
+
   parseText (char) {
     if (char === '\\') {
       this.parserState = this.parseEscapes
@@ -54,6 +57,7 @@ class RTFParser extends Transform {
       this.parseControlSymbol(char)
     }
   }
+
   parseControlSymbol (char) {
     if (char === '~') {
       this.text += '\u00a0' // nbsp
@@ -84,6 +88,7 @@ class RTFParser extends Transform {
       this.parseControlWord(char)
     }
   }
+
   parseHexChar (char) {
     if (/^[A-Fa-f0-9]$/.test(char)) {
       this.hexChar += char
@@ -96,6 +101,7 @@ class RTFParser extends Transform {
       this.parserState = this.parseText
     }
   }
+
   parseControlWord (char) {
     if (char === ' ') {
       this.emitControlWord()
@@ -111,6 +117,7 @@ class RTFParser extends Transform {
       this.parseText(char)
     }
   }
+
   parseControlWordParam (char) {
     if (/^\d$/.test(char)) {
       this.controlWordParam += char
@@ -123,11 +130,13 @@ class RTFParser extends Transform {
       this.parseText(char)
     }
   }
+
   emitText () {
     if (this.text === '') return
-    this.push({type: 'text', value: this.text, pos: this.char, row: this.row, col: this.col})
+    this.push({ type: 'text', value: this.text, pos: this.char, row: this.row, col: this.col })
     this.text = ''
   }
+
   emitControlWord () {
     this.emitText()
     if (this.controlWord === '') {
@@ -145,30 +154,36 @@ class RTFParser extends Transform {
     this.controlWord = ''
     this.controlWordParam = ''
   }
+
   emitStartGroup () {
     this.emitText()
-    this.push({type: 'group-start', pos: this.char, row: this.row, col: this.col})
+    this.push({ type: 'group-start', pos: this.char, row: this.row, col: this.col })
   }
+
   emitEndGroup () {
     this.emitText()
-    this.push({type: 'group-end', pos: this.char, row: this.row, col: this.col})
+    this.push({ type: 'group-end', pos: this.char, row: this.row, col: this.col })
   }
+
   emitIgnorable () {
     this.emitText()
-    this.push({type: 'ignorable', pos: this.char, row: this.row, col: this.col})
+    this.push({ type: 'ignorable', pos: this.char, row: this.row, col: this.col })
   }
+
   emitHexChar () {
     this.emitText()
-    this.push({type: 'hexchar', value: this.hexChar, pos: this.char, row: this.row, col: this.col})
+    this.push({ type: 'hexchar', value: this.hexChar, pos: this.char, row: this.row, col: this.col })
     this.hexChar = ''
   }
+
   emitError (message) {
     this.emitText()
-    this.push({type: 'error', value: message, row: this.row, col: this.col, char: this.char, stack: new Error().stack})
+    this.push({ type: 'error', value: message, row: this.row, col: this.col, char: this.char, stack: new Error().stack })
   }
+
   emitEndParagraph () {
     this.emitText()
-    this.push({type: 'end-paragraph', pos: this.char, row: this.row, col: this.col})
+    this.push({ type: 'end-paragraph', pos: this.char, row: this.row, col: this.col })
   }
 }
 

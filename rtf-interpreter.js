@@ -10,7 +10,7 @@ const iconv = require('iconv-lite')
 
 const availableCP = [
   437, 737, 775, 850, 852, 853, 855, 857, 858, 860, 861, 863, 865, 866,
-  869, 932, 936, 949, 950, 1125, 1250, 1251, 1252, 1253, 1254, 1257 ]
+  869, 932, 936, 949, 950, 1125, 1250, 1251, 1252, 1253, 1254, 1256, 1257 ]
 const codeToCP = {
   0: 'ASCII',
   2: 'SYMBOL',
@@ -28,7 +28,7 @@ const codeToCP = {
   186: 'CP1257',  // baltic
   204: 'CP1251', // russian
   222: 'CP874', // thai
-  238: 'CP238', // eastern european
+  238: 'CP1250', // eastern european
   254: 'CP437' // PC-437
 }
 
